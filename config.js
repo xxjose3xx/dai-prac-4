@@ -3,7 +3,7 @@ var config = {}
 require('dotenv').config();
 
 config.gae= {
-  client: "mysql",
+  client: 'mysql',
   connection: {
     socketPath: process.env.GCP_SQL_INSTANCE_CONNECTION_NAME,
     user: process.env.GCP_SQL_USER,
@@ -17,15 +17,15 @@ config.gae= {
 // por consistencia, se lo ponemos al resto de gestores de bases de datos
 
 config.heroku= {
-  client: "pg",
+  client: 'pg',
   connection: process.env.DATABASE_URL,
   useNullAsDefault: true
 }
 
 config.localbd= {
-  client: "sqlite3",
+  client: 'sqlite3',
   connection: {
-    filename: "./mibd.sqlite"
+    filename: './mibd.sqlite'
   },
   pool: {
     afterCreate: function (conn, cb) { conn.run('PRAGMA foreign_keys = ON', cb);}
@@ -34,9 +34,7 @@ config.localbd= {
 }
 
 config.app= {
-  base: '/carrito/v1',
-  maxCarritos: 500,
-  maxProductos: 20
+  base: '/api/'
 }
 
 module.exports = config;

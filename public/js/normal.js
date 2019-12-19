@@ -1,24 +1,23 @@
-window.addEventListener("load", init); 
+window.addEventListener("load", init);
 
-var globalIndex = 1;
+const base = "/api/";
 
-const base="/carrito/v1";
-
-const cabeceras= {
+const cabeceras = {
 	'Content-Type': 'application/json',
-	'Accept': 'application/json',
-}
+	'Accept': 'application/json'
+};
 
 function init() {
-	for(bloque of document.getElementsByClassName("bloque")) {
+	for (bloque of document.getElementsByClassName("bloque")) {
 		addCruz(bloque);
 	}
 
-	for(seccion of document.getElementsByTagName("section")) {
+	for (seccion of document.getElementsByTagName("section")) {
 		addFormPregunta(seccion);
 	}
 
-	document.querySelector('#nuevoCuestionario input[name="crea"]').addEventListener("click", addCuestionario);
+	document.querySelector('#nuevoCuestionario input[name="crea"]')
+	.addEventListener("click", addCuestionario);
 }
 
 function addCruz(nodo) {
@@ -27,8 +26,17 @@ function addCruz(nodo) {
 }
 
 function addFormPregunta(nodo) {
-	nodo.querySelector("encabezado-cuestionario").insertAdjacentHTML("afterend", '<div class="formulario"><ul><li><label>Enunciado de la pregunta:</label><input type="text" name="' + nodo.id + '_pregunta"></li><li><label>Respuesta:</label><input type="radio" name="' + nodo.id + '_respuesta" value="verdadero" checked>Verdadero<input type="radio" name="' + nodo.id + '_respuesta" value="falso">Falso</li><li><input type="button" value="Añadir nueva pregunta"></li></ul></div>');
-	nodo.querySelector('input[type="button"]').addEventListener("click", addPregunta);
+	nodo.querySelector("encabezado-cuestionario").insertAdjacentHTML("afterend",
+		'<div class="formulario"><ul><li><label>Enunciado de la pregunta:</label><input type="text" name="' +
+		nodo.id +
+		'_pregunta"></li><li><label>Respuesta:</label><input type="radio" name="' +
+		nodo.id +
+		'_respuesta" value="verdadero" checked>Verdadero<input type="radio" name="' +
+		nodo.id +
+		'_respuesta" value="falso">Falso</li><li><input type="button" value="Añadir nueva pregunta"></li></ul></div>'
+		);
+	nodo.querySelector('input[type="button"]').addEventListener("click",
+		addPregunta);
 }
 
 function addPregunta(evento) {
@@ -37,10 +45,11 @@ function addPregunta(evento) {
 	var selector = queryAncestorSelector(nodo, "section");
 
 	var p = document.getElementsByName(selector.id + "_pregunta")[0];
-	var r = document.querySelector('input[name="' + selector.id + '_respuesta"]:checked');
+	var r = document.querySelector('input[name="' + selector.id +
+		'_respuesta"]:checked');
 
-	if(p.value != "") {
-		var bloque = document.createElement("div");	
+	if (p.value != "") {
+		var bloque = document.createElement("div");
 		var pregunta = document.createElement("div");
 		var respuesta = document.createElement("div");
 
@@ -57,7 +66,8 @@ function addPregunta(evento) {
 		addCruz(bloque);
 
 		p.value = "";
-		document.querySelector('input[name="' + selector.id + '_respuesta"]').checked="true";
+		document.querySelector('input[name="' + selector.id + '_respuesta"]')
+		.checked = "true";
 
 	} else {
 		window.alert("No has rellenado la pregunta");
@@ -68,19 +78,34 @@ function addCuestionario() {
 
 	var tema = document.querySelector('#nuevoCuestionario input[name="tema"]');
 
-	if(tema.value != "") {
-		fetch(base + "/createma", {method: "POST", headers: cabeceras, body: {tema: tema.value}})
+	if (tema.value != "") {
+		fetch(base + "/createma", {
+			method: "POST",
+			headers: cabeceras,
+			body: {
+				tema: tema.value
+			}
+		})
 		.then(response => response.json())
 		.then(r => {
-			if(r.result) {
-				document.getElementsByTagName("main")[0].insertAdjacentHTML('beforeend', '<section id="tema' + r.result + '"><encabezado-cuestionario tema="' + tema.value + '"></encabezado-cuestionario></section>');
-				document.getElementById("menu").insertAdjacentHTML('beforeend', '<li><a href="#tema' + r.result + '">' + tema.value + '</a></li>');
-				addFormPregunta(document.getElementById("tema" + r.result));
+			if (r.result) {
+				document.getElementsByTagName("main")[0]
+				.insertAdjacentHTML('beforeend',
+					'<section id="tema' + r.result +
+					'"><encabezado-cuestionario tema="' + tema
+					.value +
+					'"></encabezado-cuestionario></section>');
+				document.getElementById("menu").insertAdjacentHTML(
+					'beforeend', '<li><a href="#tema' + r.result +
+					'">' + tema.value + '</a></li>');
+				addFormPregunta(document.getElementById("tema" + r
+					.result));
 				tema.value = "";
 			} else {
-				console.log("Fallo en la creación del tema " + tema.value + ": " + r.error);
-			}			
-		});		
+				console.log("Fallo en la creación del tema " + tema
+					.value + ": " + r.error);
+			}
+		});
 	} else {
 		window.alert("No has rellenado todos los datos.");
 	}
@@ -91,7 +116,7 @@ function insertAsLastChild(padre, nuevoHijo) {
 }
 
 function insertAsFirstChild(padre, nuevoHijo) {
-	if(padre.firstChild)
+	if (padre.firstChild)
 		padre.insertBefore(nuevoHijo, padre.insertAsFirstChild);
 	else
 		padre.appendChild(nuevoHijo);
@@ -110,29 +135,30 @@ function borraPregunta(evento) {
 	var nodo = evento.target;
 	var selector = queryAncestorSelector(nodo, "section");
 
-	if(selector.getElementsByClassName("bloque").length > 1)
+	if (selector.getElementsByClassName("bloque").length > 1)
 		removeElement(queryAncestorSelector(nodo, "div.bloque"));
 	else {
 		var menu = document.getElementById("menu").children;
-		for(var i=0; i<menu.length; i++) {
-			if(menu[i].firstElementChild.getAttribute("href").split("#")[1] == selector.id) {
+		for (var i = 0; i < menu.length; i++) {
+			if (menu[i].firstElementChild.getAttribute("href").split("#")[1] ==
+				selector.id) {
 				removeElement(menu[i]);
-				break;
-			}
+			break;
 		}
-		removeElement(selector);
 	}
+	removeElement(selector);
+}
 }
 
-function queryAncestorSelector (node,selector) {
+function queryAncestorSelector(node, selector) {
 	var parent = node.parentNode;
 	var all = document.querySelectorAll(selector);
 	var found = false;
 	while (parent !== document && !found) {
 		for (var i = 0; i < all.length && !found; i++) {
-			found= (all[i] === parent)?true:false;
+			found = (all[i] === parent) ? true : false;
 		}
-		parent= (!found)?parent.parentNode:parent;
+		parent = (!found) ? parent.parentNode : parent;
 	}
-	return (found)?parent:null;
+	return (found) ? parent : null;
 }
