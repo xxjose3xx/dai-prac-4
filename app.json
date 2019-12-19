@@ -1,0 +1,12 @@
+{
+  "name": "Un carrito de la compra escrito con Node.js",
+  "env": {
+    "CARRITO_ENV": "heroku"
+  },
+  "addons": ["heroku-postgresql:hobby-dev"],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}
