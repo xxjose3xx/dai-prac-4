@@ -132,12 +132,12 @@ app.use( async (req, res, next) => {
 // crea un tema:
 app.post(`${config.app.base}/createma`, async(req, res) => {
 	if(!req.body.tema) {
-		res.status(404).send({result: null,error:'Datos mal formados'});
+		res.status(404).send({result:null,error:'Datos mal formados'});
 		return;
 	}
 	try {
 		let id = await knex('temas').insert({tema:req.body.tema});
-		res.status(200).send({result:{temaId:id[0]},error:null});
+		res.status(200).send({result:id[0],error:null});
 	} catch(error) {
 		console.log(`No se puede crear el tema: ${error}`);
 		res.status(404).send({result:null,error:'No se pudo crear el tema'});
@@ -148,7 +148,7 @@ app.post(`${config.app.base}/createma`, async(req, res) => {
 app.get(`${config.app.base}/temas`, async(req, res) => {
 	try {
 		let temas = await knex('temas').select(['temaId','tema']);
-		res.status(200).send({result:{temas:temas},error:null});
+		res.status(200).send({result:temas,error:null});
 	} catch(error) {
 		console.log(`No se pueden recuperar los temas: ${error}`);
 		res.status(404).send({result:null,error:'No se pueden recuperar los temas'});
@@ -179,10 +179,21 @@ app.post(`${config.app.base}/tema/:temaId/creapregunta`, async(req, res) => {
 			return;
 		}
 		let id = await knex('preguntas').insert({pregunta:req.body.pregunta,respuesta:req.body.respuesta,temaId:req.params.temaId});
-		res.status(200).send({result:{preguntaId:id[0]},error:null});
+		res.status(200).send({result:id[0],error:null});
 	} catch(error) {
 		console.log(`No se puede crear la pregunta: ${error}`);
 		res.status(404).send({result:null,error:'No se ha podido crear la pregunta'});
+	}
+});
+
+// consulta las preguntas de un tema:
+app.get(`${config.app.base}/tema/:temaId/preguntas`, async(req, res) => {
+	try {
+		let tema = await knex('preguntas').select('preguntaId','pregunta','respuesta').where('temaId',req.params.temaId);
+		res.status(200).send({result:tema,error:null});
+	} catch(error) {
+		console.log(`No se pueden recuperar las preguntas: ${error}`);
+		res.status(404).send({result:null,error:'No se han podido recuperar las preguntas'});
 	}
 });
 

@@ -7,10 +7,11 @@
   <title>Carrito</title>
 </head>
 <body>
-  <input type="button" onclick="test()" value="Prueba 1">
-  <input type="button" onclick="test2()" value="Prueba 2">
-  <input type="button" onclick="test3()" value="Prueba 3">
-  <input type="button" onclick="test4()" value="Prueba 4">
+  <input type="button" onclick="test()" value="POST: /createma"></br>
+  <input type="button" onclick="test2()" value="GET: /temas"></br>
+  <input type="button" onclick="test3()" value="DELETE: /tema/{temaId}"></br>
+  <input type="button" onclick="test4()" value="POST: /tema/{temaId}/creapregunta"></br>
+  <input type="button" onclick="test5()" value="GET: /tema/{temaId}/preguntas"></br>
 
   <h1>Gestión de carritos de la compra</h1>
   <!-- Formularios: -->
@@ -158,6 +159,15 @@
       method: "POST",
       headers: cabeceras,
       body: JSON.stringify(payload)
+    };
+    fetch(url,request);
+  }
+
+  function test5() {
+    const url= `${base}/tema/1/preguntas`;
+    const request= {
+      method: "GET",
+      headers: cabeceras,
     };
     fetch(url,request);
   }
