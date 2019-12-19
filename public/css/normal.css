@@ -1,0 +1,144 @@
+@import url('https://fonts.googleapis.com/css?family=Droid+Serif');
+
+body {
+    font-family: 'Droid Serif';
+    background-color: white;
+    color: #333333;
+    margin: 0px;
+}
+
+section {
+    counter-reset: bloques;
+}
+
+div.bloque::before {
+    counter-increment: bloques;
+    content: "Pregunta " counter(bloques);
+}
+
+[data-valor="true"]::after {
+    content: "Verdadero";
+}
+
+[data-valor="false"]::after {
+    content: "Falso";
+}
+
+header, main {
+    width: 98%;
+    max-width: 1080px;
+    margin-left: auto;
+    margin-right: auto;  
+}
+
+header {
+    text-align: center;
+}
+
+h1 {
+    font-weight: bold;
+    font-size: 36px;
+}
+
+ul {
+    list-style-type: none;
+}
+
+ul li a {
+    text-decoration: none;
+    color: cornflowerblue;
+}
+
+section {
+    margin-top: 80px;
+}
+
+div.pregunta {
+    margin-top: 1ex;
+    margin-bottom: 1ex;
+}
+
+div.bloque {
+    position: relative;
+    background-color: whitesmoke;
+    border-style: solid;
+    border-width: 1px;
+    border-color: lightgray;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    padding: 10px;
+    box-shadow: 6px 6px 3px slategray;
+}
+
+span.idioma {
+    font-style: italic;
+}
+
+footer {
+    text-align: center;
+    height: 50px;
+    margin-top: 100px;
+    background-color: steelblue;
+    width: 100%;
+    font-size: 80%;
+    color: white;
+    line-height: 50px;
+}
+
+footer a {
+    color: lightgray;
+}
+
+div.formulario ul {
+    list-style-type: none;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    margin-right: 0px;
+    margin-left: 0px;
+    padding: 0px;
+}
+
+div.formulario ul li {
+    padding: 12px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #eee;
+}
+
+div.formulario ul:first-child {
+    border-top-style: solid;
+    border-top-width: 1px;
+    border-top-color: #777;
+}
+
+div.formulario ul:last-child {
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #777;
+}
+
+div.formulario label {
+    display: inline-block;
+    width: 15em;
+}
+
+div.formulario input[type="text"] {
+    border-style: solid;
+    border-color: #aaa;
+    box-shadow: 0px 0px 3px #ccc, 0 5px 8px #eee inset;
+    border-radius:2px;
+}
+
+div.formulario input[type="url"] {
+    border-style: solid;
+    border-color: #aaa;
+    box-shadow: 0px 0px 3px #ccc, 0 5px 8px #eee inset;
+    border-radius:2px;
+}
+
+div.bloque div.borra {
+    position: absolute;
+    right: 2px;
+    top: 1px;
+    cursor: pointer;
+}
