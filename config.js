@@ -27,6 +27,9 @@ config.localbd= {
   connection: {
     filename: "./mibd.sqlite"
   },
+  pool: {
+    afterCreate: function (conn, cb) { conn.run('PRAGMA foreign_keys = ON', cb);}
+  },
   useNullAsDefault: true
 }
 

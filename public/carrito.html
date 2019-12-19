@@ -10,6 +10,7 @@
   <input type="button" onclick="test()" value="Prueba 1">
   <input type="button" onclick="test2()" value="Prueba 2">
   <input type="button" onclick="test3()" value="Prueba 3">
+  <input type="button" onclick="test4()" value="Prueba 4">
 
   <h1>Gestión de carritos de la compra</h1>
   <!-- Formularios: -->
@@ -143,6 +144,20 @@
     const request= {
       method: "DELETE",
       headers: cabeceras,
+    };
+    fetch(url,request);
+  }
+
+  function test4() {
+    const url= `${base}/tema/1/creapregunta`;
+    const payload= {
+      pregunta: "Esta es una pregunta",
+      respuesta: "Esta es una respuesa"
+    };
+    const request= {
+      method: "POST",
+      headers: cabeceras,
+      body: JSON.stringify(payload)
     };
     fetch(url,request);
   }
