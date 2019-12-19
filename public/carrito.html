@@ -12,6 +12,7 @@
   <input type="button" onclick="test3()" value="DELETE: /tema/{temaId}"></br>
   <input type="button" onclick="test4()" value="POST: /tema/{temaId}/creapregunta"></br>
   <input type="button" onclick="test5()" value="GET: /tema/{temaId}/preguntas"></br>
+  <input type="button" onclick="test6()" value="DELETE: /pregunta/{preguntaId}"></br>
 
   <h1>Gestión de carritos de la compra</h1>
   <!-- Formularios: -->
@@ -167,6 +168,15 @@
     const url= `${base}/tema/1/preguntas`;
     const request= {
       method: "GET",
+      headers: cabeceras,
+    };
+    fetch(url,request);
+  }
+
+  function test6() {
+    const url= `${base}/pregunta/1`;
+    const request= {
+      method: "DELETE",
       headers: cabeceras,
     };
     fetch(url,request);

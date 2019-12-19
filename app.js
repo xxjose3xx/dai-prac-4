@@ -197,6 +197,18 @@ app.get(`${config.app.base}/tema/:temaId/preguntas`, async(req, res) => {
 	}
 });
 
+// borrar una pregunta:
+app.delete(`${config.app.base}/pregunta/:preguntaId`, async(req, res) => {
+	try {
+		await knex('preguntas').where('preguntaId',req.params.preguntaId).del();
+		res.status(200).send({result:'Borrado con éxito',error:null});
+	} catch(error) {
+		console.log(`No se puede borrar la pregunta: ${error}`);
+		res.status(404).send({result:null,error:'No se ha podido borrar la pregunta'});
+	}
+});
+
+
 
 //******************************************************************************
 //******************************************************************************
