@@ -34,7 +34,7 @@ config.localbd= {
 }
 
 config.app= {
-  base: '/api/'
+  base: '/api'
 }
 
 module.exports = config;
